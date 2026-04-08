@@ -2,6 +2,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.label import Label
+from kivy.uix.button import Button
 from kivy.lang import Builder
 from kivy.clock import Clock
 from kivy.graphics import Color, Rectangle
@@ -62,24 +63,40 @@ class ScheduleView(BoxLayout):
                 header.bind(pos=update_header_bg, size=update_header_bg)
                 
                 day_label = Label(text=day, font_size='16sp', bold=True, color=(1,1,1,1), 
-                                 halign='left', valign='middle', size_hint_x=0.8)
+                                 halign='left', valign='middle', size_hint_x=0.7)
                 day_label.bind(width=lambda inst, val: setattr(inst, 'text_size', (val, None)))
                 header.add_widget(day_label)
                 day_section.add_widget(header)
                 
-                for class_item in self.model.get_schedule_data()[day]:
+                for idx, class_item in enumerate(self.model.get_schedule_data()[day]):
                     class_row = BoxLayout(orientation='horizontal', size_hint_y=None, height=50, spacing=10)
                     
-                    course_label = Label(text=class_item["course"], size_hint_x=0.55, font_size='14sp',
+                    course_label = Label(text=class_item["course"], size_hint_x=0.45, font_size='14sp',
                                         halign='left', valign='middle', color=(0,0,0,0.85))
                     course_label.bind(width=lambda inst, val: setattr(inst, 'text_size', (val, None)))
                     
-                    time_label = Label(text=class_item["time"], size_hint_x=0.45, font_size='12sp',
+                    time_label = Label(text=class_item["time"], size_hint_x=0.35, font_size='12sp',
                                      halign='right', valign='middle', color=(0.5,0.5,0.5,1))
                     time_label.bind(width=lambda inst, val: setattr(inst, 'text_size', (val, None)))
                     
+                    # Delete button
+                    del_btn = Button(
+                        text='x',
+                        size_hint_x=0.07,
+                        background_normal='',
+                        background_color=(0.8, 0.2, 0.2, 1),
+                        font_size='14sp',
+                        color=(1, 1, 1, 1)
+                    )
+                    del_btn.bind(on_press=lambda instance, d=day, i=idx: self.delete_class(d, i))
+                    
                     class_row.add_widget(course_label)
                     class_row.add_widget(time_label)
+                    class_row.add_widget(del_btn)
                     day_section.add_widget(class_row)
                 
                 schedule_list.add_widget(day_section)
+
+    def delete_class(self, day, index):
+        if self.model.delete_class(day, index):
+            self.refresh_display()
