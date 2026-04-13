@@ -1,6 +1,6 @@
 ### College Life App
 
-A mobile application built with **Kivy** and **Python** to help college students manage their daily academic life.
+A fully-functional mobile application built with **Kivy** and **Python** to help college students manage their daily academic life.
 All user data is saved locally using **JSON files**.
 
 Demo: https://drive.google.com/file/d/1XwN_Chx5A4eARYLuj93LewUMWl-ZkJ9g/view?usp=sharing
