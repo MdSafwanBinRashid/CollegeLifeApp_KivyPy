@@ -7,8 +7,8 @@ Demo: https://drive.google.com/file/d/1XwN_Chx5A4eARYLuj93LewUMWl-ZkJ9g/view?usp
 
 #### Requirements
 
-- Python 3.10+
-- Kivy 2.3+
+- Python 3.12
+- Kivy 2.3.1
 
 #### Installation
 
